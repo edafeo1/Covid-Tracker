@@ -1,6 +1,7 @@
 package fegohuncho.covidApp.service;
 
 
+import fegohuncho.covidApp.service.Modules.LocationStats;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,21 +24,37 @@ public class CovidDataService {
 
 
 
-    @PostConstruct
-    public void fetchVirusData() throws IOException, InterruptedException {
+    private List<LocationStats> TotalStats = new ArrayList<>();
 
+    public List<LocationStats> getTotalStats() {
+        return TotalStats;
+    }
+
+    @PostConstruct
+    @Scheduled(cron = "* * 1 * * *")
+    public void fetchVirusData() throws IOException, InterruptedException {
+        List<LocationStats> newStat = new ArrayList<>();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(VIRUS_DATA_URL))
                 .build();
         HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(httpResponse.body());
+       // System.out.println(httpResponse.body());
         StringReader csvBodyReader = new StringReader(httpResponse.body());
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
         for (CSVRecord record : records) {
-            String state = record.get("Province/State");
-            System.out.println(state);
+            LocationStats locationStats = new LocationStats();
+            locationStats.setState(record.get("Province/State"));
+            locationStats.setCountry(record.get("Country/Region"));
+            int todaysCase = Integer.parseInt(record.get(record.size()-1));
+            int dayBeforeCases = Integer.parseInt(record.get(record.size()-2));
+            locationStats.setLatestTotalCases(todaysCase);
+            locationStats.setDiffFromPrevDay(todaysCase - dayBeforeCases);
+            System.out.println(locationStats);
+            newStat.add(locationStats);
+
         }
+        this.TotalStats = newStat;
     }
 
 }
