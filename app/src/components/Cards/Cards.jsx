@@ -5,13 +5,9 @@ import CountUp from 'react-countup';
 
 
 const Cards = ({ data: {confirmed, deaths, lastupdate, recovered} }) =>{
-
-
-
     
-    console.log(lastupdate);
-
-
+    console.log(confirmed);
+    
 
     return (
         <div className={styles.container}>
@@ -19,19 +15,8 @@ const Cards = ({ data: {confirmed, deaths, lastupdate, recovered} }) =>{
                 <Grid item component={Card}>
                     <CardContent>
                         <Typography color="textSecondary" gutterBottom> infected </Typography>
-
-                        <Typography varient="h5">
-                            <CountUp 
-                            start={0}
-                            end={confirmed}
-                            duration={10}
-                            seperator=","
-                            >
-
-                            </CountUp>
-                            </Typography>
-
-                        <Typography color="textSecondary">{lastupdate}</Typography>
+                        <Typography varient="h5">{confirmed}</Typography>
+                        <Typography color="textSecondary"></Typography>
                         <Typography variant="body2"> Number of confirmed coronavirus cases </Typography>
                     </CardContent>
                 </Grid>
