@@ -4,10 +4,16 @@ const apiUrl = 'https://covid19.mathdro.id/api';
 
 class Services {
 
-    fetchCovidData = async () =>{
+    fetchCovidData = async (country) =>{
+    
+        let changableUrl = apiUrl;  
+
+        if(country){
+            changableUrl = `${apiUrl}/countries/${country}`
+        }
 
         try{
-            const { data } = await axios.get(apiUrl);
+            const { data } = await axios.get(changableUrl);
     
             const updatedData = {
                 confirmed: data.confirmed.value,
