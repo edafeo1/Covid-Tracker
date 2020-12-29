@@ -34,7 +34,7 @@ const Cards = ({ data: {confirmed, deaths, lastupdate, recovered} }) =>{
                     <CardContent>
                         <Typography color="textSecondary" gutterBottom> Deaths </Typography>
                         <Typography varient="h5">{deaths}</Typography>
-                        <Typography color="textSecondary"> Data</Typography>
+                        <Typography color="textSecondary"></Typography>
                         <Typography variant="body2"> Number of confirmed Deaths </Typography>
                     </CardContent>
                 </Grid>

@@ -32,7 +32,7 @@ const Charts = ({ data: {confirmed, deaths, recovered}, country}) =>{
                  borderColor: 'Red',
                  backgroundColor: 'rgba(255, 0, 0, 0.5)',
                  fill: true,
-            }],
+           }],
         }}
         />
         ) : null
@@ -49,7 +49,7 @@ const Charts = ({ data: {confirmed, deaths, recovered}, country}) =>{
                 label: 'People', 
                 backgroundColor: [ 
                     'blueviolet',
-                    'blue',
+                    'green',
                     'red'
                 ],
                 data:[ confirmed, recovered, deaths]
